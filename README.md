@@ -317,10 +317,10 @@ A json object with student data by gender with `boys`, `girls` and `other`.
 
 ```
 {
-  gender: {
-    boys: 26,
-    girls: 15,
-    other: 3
+  "gender": {
+    "boys": 26,
+    "girls": 15,
+    "other": 3
   }
 }
 ```
