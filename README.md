@@ -315,6 +315,7 @@ A json object with an array of `teachers`.
 
 A json object with student data by gender with `boys`, `girls` and `other`.
 
+```
 {
   gender: {
     boys: 26,
@@ -322,6 +323,7 @@ A json object with student data by gender with `boys`, `girls` and `other`.
     other: 3
   }
 }
+```
 
 ### **CLASSROOMS** | `classroom`
 
