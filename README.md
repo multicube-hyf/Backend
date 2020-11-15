@@ -43,18 +43,17 @@
 
 ##### Request
 
-A json object for the user to register with **`username`**, **`name`**, **`lastName`**, **`email`**, **`password`**, **`role`** and `phone`.
+A json object for the user to register with **`username`**, **`name`**, **`lastName`**, `email`, **`password`**, **`role`** and `phone`.
 
 ```
 {
   "username": "Larizaak",
   "name": "Isaak",
-  "lastName": "Larsen"
+  "lastName": "Larsen",
   "email": "izaak@example.com",
   "password": "really-strong-password",
   "role": "admin",
   "phone": "+xx xxx xx xx xx"
-  
 }
 ```
 
@@ -70,8 +69,7 @@ A json object for the registered user with `id`, `username`,  `email`, `name`, `
     "email": "izaak@example.com",
     "name": "Isaak",
     "lastName": "Larsen",
-    "role": "admin",
-    "created_at": "2025-07-05T14:30:00Z"
+    "role": "admin"
   },
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1CJlbWFpbCI6ImphY2tAZXc2VybmFtZSI6ImphY2siLhhbXBsZS5jb20iLCJpYXQiOjE1OTg2MTc2MTksImV4cCI6MTYwMTIwOTYxOX0.s85ti_rzBVHJ6Gt1MY7seYfdcjB6sR939p2CexA40gI"
 }
@@ -129,7 +127,7 @@ A json object for the updated user with `id`, `username`, `email`,  `name`,  `la
     "name": "Isaak",
     "phone": "+xx xxx xx xx xx",
     "lastName": "Larsen",
-    "role": "teacher"
+    "role": "teacher",
     "updated_at": "2025-05-05T14:30:00Z"
   }
 }
@@ -168,7 +166,7 @@ A json object with  an array of `users`.
       "lastName": "Larsen",
       "role": "teacher",
       "phone": "+xx xxx xx xx xx",
-      "created_at": "2025-04-05T14:30:00Z"
+      "created_at": "2025-04-05T14:30:00Z",
       "updated_at": "2025-05-05T14:30:00Z"
     },
     {
@@ -179,7 +177,7 @@ A json object with  an array of `users`.
       "lastName": "Benjamin",
       "role": "admin",
       "phone": "+xx xxx xx xx xx",
-      "created_at": "2021-01-05T14:30:00Z"
+      "created_at": "2021-01-05T14:30:00Z",
       "updated_at": "2021-03-05T14:30:00Z"
     },
     {
@@ -193,14 +191,13 @@ A json object with  an array of `users`.
       "dad_name": "Carl",
       "dad_lastName": "Boyd",
       "phone": "+xx xxx xx xx xx",
-      "created_at": "2025-01-05T14:30:00Z"
-      "updated_at": "2025-05-05T14:30:00Z"
+      "created_at": "2025-01-05T14:30:00Z",
+      "updated_at": "2025-05-05T14:30:00Z",
       "last_connection": "2025-07-05T14:30:00Z"
     },
   ]
 }
 ```
-
 #### For users with role of type `admin`: Get a list of all the users with role of students
 
 **`GET /api/users/students`**
@@ -223,8 +220,8 @@ A json object with an array of `students`.
       "mom_name": "Lisa",
       "mom_lastName": "Addams",
       "phone": "+xx xxx xx xx xx",
-      "created_at": "2025-01-05T14:30:00Z"
-      "updated_at": "2025-05-05T14:30:00Z"
+      "created_at": "2025-01-05T14:30:00Z",
+      "updated_at": "2025-05-05T14:30:00Z",
       "last_connection": "2025-07-05T14:30:00Z"
     },
     {
@@ -238,8 +235,8 @@ A json object with an array of `students`.
       "dad_name": "Carl",
       "dad_lastName": "Boyd",
       "phone": "+xx xxx xx xx xx",
-      "created_at": "2025-01-05T14:30:00Z"
-      "updated_at": "2025-05-05T14:30:00Z"
+      "created_at": "2025-01-05T14:30:00Z",
+      "updated_at": "2025-05-05T14:30:00Z",
       "last_connection": "2025-07-05T14:30:00Z"
     },
     {
@@ -253,8 +250,8 @@ A json object with an array of `students`.
       "dad_name": "Natan",
       "dad_lastName": "Fischer",
       "phone": "+xx xxx xx xx xx",
-      "created_at": "2025-01-05T14:30:00Z"
-      "updated_at": "2025-05-05T14:30:00Z"
+      "created_at": "2025-01-05T14:30:00Z",
+      "updated_at": "2025-05-05T14:30:00Z",
       "last_connection": "2025-07-05T14:30:00Z"
     },
   ]
@@ -292,7 +289,7 @@ A json object with an array of `teachers`.
       "lastName": "Townsend",
       "role": "teacher",
       "phone": "+xx xxx xx xx xx",
-      "created_at": "2025-04-05T14:30:00Z"
+      "created_at": "2025-04-05T14:30:00Z",
       "updated_at": "2025-05-05T14:30:00Z"
     },
     {
@@ -303,13 +300,28 @@ A json object with an array of `teachers`.
       "lastName": "Burton",
       "role": "teacher",
       "phone": "+xx xxx xx xx xx",
-      "created_at": "2025-04-05T14:30:00Z"
+      "created_at": "2025-04-05T14:30:00Z",
       "updated_at": "2025-05-05T14:30:00Z"
     },
   ]
 }
 
-```
+``` 
+#### For users with role of type `admin`: Student data broken down by gender
+
+**`GET /api/users/students/gender`**
+
+##### Response `200`
+
+A json object with student data by gender with `boys`, `girls` and `other`.
+
+{
+  gender: {
+    boys: 26,
+    girls: 15,
+    other: 3
+  }
+}
 
 ### **CLASSROOMS** | `classroom`
 
@@ -532,8 +544,37 @@ A json object with  and an array of `students` for that specific classroom.
       },
   ]
 }
+```
+#### For users with role  `admin`: Get details of a classroom
+
+**`GET /api/classrooms/:id`**
+
+##### Response `200`
+
+A json object with the details of the  classroom with `id`, `title`, `description`, `teachers_usernames`, `students_usernames`, `messages`, `created_at` and `updated_at`.
 
 ```
+{
+  "classroom": 
+    {
+      "id": "5f9ed5ce47c42738d03d178d"
+      "title": "Class 8",
+      "description": "My class 8",
+      "teachers_usernames": ["teacher1", "teacher2"],
+      "students_usernames": ["fisherAi", "BoydH", "jaoBel" ],
+      "messages": [
+                    {
+                      title: "first message",
+                      description: "This is the fist message for this class",
+                      author_username: "teacher1"
+                    }
+                  ],
+      "created_at": "2025-05-05T10:00:00Z" 
+      "updated_at": "2025-07-05T10:00:00Z" 
+    }
+}
+```
+
 
 #### For users with role  `admin`: Get a list of all the teachers in a  classrooms
 
@@ -546,7 +587,7 @@ A json object with  and an array of `teachers` for that specific classroom.
 
 ```
 {
-   [
+  teachers: [
     {
       "id": "5f9ed5ce47c42738d03d178d",
       "username": "larizaak",
