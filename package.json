@@ -2,15 +2,17 @@
   "name": "bak-end",
   "version": "1.0.0",
   "description": "",
-  "main": "srever.js",
-  "type":"module",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "Multicube Team",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.10.13"
   }
