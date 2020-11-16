@@ -1,9 +1,8 @@
 //import 
-import express from 'express';
-import cors from 'cors';
-import {dbConnection} from './database/config.js';
-import dotenv from 'dotenv';
-dotenv.config();
+const express = require('express');
+const { dbConnection } = require('./database/config');
+const cors = require('cors');
+require('dotenv').config();
 
 
 
@@ -18,10 +17,11 @@ dbConnection()
 app.use(cors());
 
 //body parser
-app.use(express.json());  
+app.use(express.json());
+
+//Routes
 
 
 
 //listen
 app.listen(port, () => console.log(`Listening on localhost:${port}`))
-
