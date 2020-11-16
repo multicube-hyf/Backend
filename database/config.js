@@ -9,13 +9,6 @@ const dbConnection =  async () => {
             useCreateIndex: true
         });
         
-        //This is just for local test
-        // await mongoose.connect('mongodb://localhost:27017/nada', {
-        //     useNewUrlParser: true, 
-        //     useUnifiedTopology: true,
-        //     useCreateIndex: true
-        // });
-
         console.log('DB online')
 
      } catch (error) {
