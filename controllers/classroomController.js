@@ -2,19 +2,14 @@ const Classroom = require('../models/ClassroomModel');
 
 const createClassroom = async (req, res) => {
 
-    
-
      try {
 
         let classroom =  new Classroom(req.body);
 
         const savedClassroom = await classroom.save();
 
-        console.log(savedClassroom)
-        
-
         res.status(201).json({
-            ok: true
+            classroom: savedClassroom
         });
          
      } catch (error) {

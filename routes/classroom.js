@@ -8,6 +8,6 @@ const {createClassroom} = require('../controllers/classroomController');
 const express = require('express');
 const router = express.Router();
 
-router.post('/', createClassroom)
+router.post('/', createClassroom);
 
 module.exports = router;
