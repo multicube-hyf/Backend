@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', require('./routes/users'));
+app.use('/api/messages', require('./routes/messages'));
 
 //listen
 app.listen(port, () => console.log(`Listening on localhost:${port}`))
