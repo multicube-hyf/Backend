@@ -49,7 +49,7 @@ const getClassroom = async (req, res) => {
 
     if(!classroom){
          return res.status(400).json({
-            msg: 'There is no class with that ID'
+            msg: 'There is no classroom with that ID'
         })
     };
 
@@ -57,7 +57,32 @@ const getClassroom = async (req, res) => {
         classroom
     });
 
-        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'Please talk to the administrator'
+        });
+    }
+};
+
+const deleteClass = async (req, res) => {
+    const {id: classId} = req.params
+
+    try {
+
+       let classroomDeleted = await Classroom.findByIdAndDelete(classId);
+
+       if(!classroomDeleted){
+          return res.status(400).json({
+               msg: "There is no classroom with that ID"
+           })
+       }
+
+       res.status(200).json({
+           msg: "Classroom deleted successfully"
+       })
+
     } catch (error) {
         console.log(error)
         res.status(500).json({
@@ -70,8 +95,11 @@ const getClassroom = async (req, res) => {
 
 
 
+
+
 module.exports = {
     createClassroom,
     getClassrooms,
-    getClassroom
+    getClassroom,
+    deleteClass
 };
