@@ -12,7 +12,8 @@ const dbConnection =  async () => {
         await mongoose.connect('mongodb://localhost:27017/multicube', {
             useNewUrlParser: true, 
             useUnifiedTopology: true,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useFindAndModify: false
         });
         
         console.log('DB online')

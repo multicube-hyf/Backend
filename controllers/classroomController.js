@@ -91,7 +91,41 @@ const deleteClass = async (req, res) => {
         });
     }
      
+};
+
+const updateClassroom  = async (req, res) => {
+    const {id: classId} = req.params;
+
+     try {
+        
+        const classroom = await Classroom.findById(classId);
+
+        if(!classroom){
+            return res.status(404).json({
+                msg: 'There is no classroom with that ID'
+            })
+        };
+
+        const newClass = {
+            ...req.body
+        };
+
+        const classUpdated = await Classroom.findByIdAndUpdate(classId, newClass, {new: true} );
+
+        res.status(200).json({
+            classroom: classUpdated
+        });
+
+         
+     } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'Please talk to the administrator'
+        });
+     }
 }
+
 
 
 
@@ -101,5 +135,6 @@ module.exports = {
     createClassroom,
     getClassrooms,
     getClassroom,
-    deleteClass
+    deleteClass,
+    updateClassroom
 };
