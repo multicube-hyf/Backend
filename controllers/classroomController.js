@@ -19,8 +19,59 @@ const createClassroom = async (req, res) => {
             msg: 'Please talk to the administrator'
         });
      }
+};
+
+const getClassrooms = async (req, res) => {
+    
+    try {
+
+        let classrooms = await  Classroom.find();
+
+        res.status(200).json({
+            classrooms
+        })
+
+     } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'Please talk to the administrator'
+        });
+     }
+};
+
+const getClassroom = async (req, res) => {
+    const {id: classId} = req.params
+
+    try {
+
+    let classroom  = await Classroom.findById(classId);
+
+    if(!classroom){
+         return res.status(400).json({
+            msg: 'There is no class with that ID'
+        })
+    };
+
+    res.status(200).json({
+        classroom
+    });
+
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'Please talk to the administrator'
+        });
+    }
+     
 }
 
+
+
 module.exports = {
-    createClassroom
+    createClassroom,
+    getClassrooms,
+    getClassroom
 };

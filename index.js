@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 //Routes
-app.use('/api/classroom', require('./routes/classroom'));
+app.use('/api/classrooms', require('./routes/classroom'));
 
 
 //listen
