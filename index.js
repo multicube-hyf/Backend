@@ -21,6 +21,7 @@ app.use(express.json());
 
 //Routes
 app.use('/api/classrooms', require('./routes/classroom'));
+app.use('/api/users', require('./routes/user-test'));
 
 
 //listen
