@@ -71,9 +71,9 @@ const deleteClass = async (req, res) => {
 
     try {
 
-       let classroomDeleted = await Classroom.findByIdAndDelete(classId);
+       let classroomToDeleted = await Classroom.findByIdAndDelete(classId);
 
-       if(!classroomDeleted){
+       if(!classroomToDeleted){
           return res.status(400).json({
                msg: "There is no classroom with that ID"
            })
