@@ -31,6 +31,9 @@ const userSchema = Schema({
     },
     updated_at: {
         type: Date
+    },
+    lastConnection: {
+        type: Date
     }
 });
 
