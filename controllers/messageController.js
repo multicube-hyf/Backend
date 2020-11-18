@@ -1,22 +1,32 @@
-const message = require('../models/MessageModel')
+const Message = require('../models/MessageModel')
 
 const controllers = {
+
     // Get all Messges
-    getMessages: (req, res) => {
-       message.find((err, data) => {
+    getAllMessages: async(req, res) => {
+        try {
+          await Message.find((err, data) => {
         if(err){
             return next(err) 
         }
         else {
             res.json(data);
         }
-    })
+        })}
+        catch (error) {
+            console.log(error)
+            res.status(500).json({
+                msg: "There was an error, please contact admin"
+            })    
+        } 
+
     },
 
     // Get Single Message
-    getOne: (req, res) => {
+    getOneMessage: async(req, res) => {
         const id = req.params.id;
-        message.findById(id, (err, data) => {
+       try{
+            await Message.findById(id, (err, data) => {
             if(err){
                 return next(err) 
             }
@@ -24,12 +34,20 @@ const controllers = {
                 res.json(data);
             }
         })
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: "There was an error, please contact admin"
+        })    
+    } 
     },
 
     //CREATE Messages
-    create: (req, res) => {
+    createNewMessage: async(req, res) => {
           const newMessage = req.body  
-            message.create(newMessage, (err, data) => {
+          try{  
+          await Message.create(newMessage, (err, data) => {
                 if(err){
                     res.status(500).send(err) //internal server error message
                 }
@@ -37,12 +55,20 @@ const controllers = {
                     res.status(201).send(`new message added : \n ${data}`)
                 }
             })
+        }
+        catch (error) {
+            console.log(error)
+            res.status(500).json({
+                msg: "There was an error, please contact admin"
+            })    
+        } 
     },
 
     //Update Message
-    update: (req, res, next) => {
+    updateMessage: async(req, res, next) => {
         const id = req.params.id;
-        message.findByIdAndUpdate(id, {
+        try {
+        await Message.findByIdAndUpdate(id, {
             $set: req.body
         }, (err, data) => {
             if(err){
@@ -54,11 +80,19 @@ const controllers = {
                 console.log('message updated successfully ..!')
             }
         })
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: "There was an error, please contact admin"
+        })    
+    } 
     },
 
     //Delete Message
-    delete: (req, res, next) => {
-        message.findByIdAndRemove(req.params.id, (error, data) => {
+    deleteMessage: async(req, res, next) => {
+        try {
+        await Message.findByIdAndRemove(req.params.id, (error, data) => {
             if(error){
                 return next(error);
             }
@@ -67,6 +101,13 @@ const controllers = {
             }
         })
     }
-}
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: "There was an error, please contact admin"
+        })    
+    } 
+
+}}
 
 module.exports = controllers;

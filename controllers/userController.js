@@ -1,22 +1,30 @@
-const user = require('../models/UserModel')
+const User = require('../models/UserModel')
 
 const controllers = {
     // Get all users
-    getUsers: (req, res) => {
-       user.find((err, data) => {
+    getAllUsers: async(req, res) => {
+        try {
+      await User.find((err, data) => {
         if(err){
             return next(err) 
         }
         else {
             res.json(data);
-        }
-    })
+        } })
+     }
+catch (error) {
+    console.log(error)
+    res.status(500).json({
+        msg: "There was an error, please contact admin"
+    })    
+   } 
     },
 
     // Get Single user
-    getOne: (req, res) => {
+    getOneUser: async(req, res) => {
         const id = req.params.id;
-        user.findById(id, (err, data) => {
+        try {
+            await User.findById(id, (err, data) => {
             if(err){
                 return next(err) 
             }
@@ -24,12 +32,20 @@ const controllers = {
                 res.json(data);
             }
         })
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: "There was an error, please contact admin"
+        })    
+    } 
     },
 
     //CREATE users
-    create: (req, res) => {
+    createNewUser: async(req, res) => {
           const newUser = req.body  
-            user.create(newUser, (err, data) => {
+          try{
+            await User.create(newUser, (err, data) => {
                 if(err){
                     res.status(500).send(err) //internal server error message
                 }
@@ -37,12 +53,20 @@ const controllers = {
                     res.status(201).send(`new user created : \n ${data}`)
                 }
             })
+        }
+        catch (error) {
+            console.log(error)
+            res.status(500).json({
+                msg: "There was an error, please contact admin"
+            })    
+        } 
     },
 
     //Update user
-    update: (req, res, next) => {
+    updateUser: async(req, res, next) => {
         const id = req.params.id;
-        user.findByIdAndUpdate(id, {
+        try{
+        await User.findByIdAndUpdate(id, {
             $set: req.body
         }, (err, data) => {
             if(err){
@@ -54,11 +78,19 @@ const controllers = {
                 console.log('user updated successfully ..!')
             }
         })
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: "There was an error, please contact admin"
+        })    
+    } 
     },
 
     //Delete user
-    delete: (req, res, next) => {
-        user.findByIdAndRemove(req.params.id, (error, data) => {
+    deleteUser: async(req, res, next) => {
+        try{
+        await User.findByIdAndRemove(req.params.id, (error, data) => {
             if(error){
                 return next(error);
             }
@@ -67,6 +99,13 @@ const controllers = {
             }
         })
     }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: "There was an error, please contact admin"
+        })    
+    } 
+}
 }
 
 module.exports = controllers;
