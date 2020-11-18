@@ -22,7 +22,7 @@ const studentSchema = Schema({
     mom_lastName: {
         type: String
     }
-});
+}, { timestamps: true });
 
 studentSchema.method('toJSON', function () {
     const {__v, _id, ...object} = this.toObject();

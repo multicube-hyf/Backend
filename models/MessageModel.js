@@ -19,7 +19,7 @@ const messageSchema = Schema({
     updated_at: {
         type: Date
     }
-});
+}, { timestamps: true });
 
 messageSchema.method('toJSON', function () {
     const {__v, _id, ...object} = this.toObject();

@@ -26,7 +26,7 @@ const classroomSchema = Schema({
     updated_at: {
         type: Date
     }
-});
+}, { timestamps: true });
 
 classroomSchema.method('toJSON', function () {
     const {__v, _id, ...object} = this.toObject();
