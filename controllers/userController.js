@@ -123,15 +123,18 @@ const controllers = {
 			let savedUser = await user.save();
 
 			//token
-			const token = await generateJWT(savedUser._id, user.name);
+			const token = await generateJWT(savedUser._id);
 
 			if (role === 'student') {
+				
 				let student = new Student({
 					...req.body,
 					user: savedUser._id,
+					progress: 0
 				});
 
-				await student.save();
+				const savedStudent = await student.save();
+				const token = await generateJWT(savedUser._id, savedStudent._id);
 
 				return res.status(201).json({
 					msg: 'User created successfully',
