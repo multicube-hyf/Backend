@@ -14,7 +14,8 @@ const validateJWT = async (req, res, next) => {
 	try {
 		const payload = jwt.verify(token, process.env.JWT_SECRET_SEED);
 
-		req.id = payload.userId;
+		req.userId = payload.userId;
+		req.studentId = payload.studentId;
 
         let user = await User.findById(payload.userId);
         
