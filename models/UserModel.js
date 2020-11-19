@@ -33,7 +33,7 @@ const userSchema = Schema({
         type: Date
     },
     lastConnection: {
-        type: Date
+        type: String
     }
 });
 
