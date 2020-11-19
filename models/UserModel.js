@@ -26,14 +26,14 @@ const userSchema = Schema({
         type: String,
         required: true
     },
-    lastConnection: {
-        type: String
-    },
     created_at: {
         type: Date
     },
     updated_at: {
         type: Date
+    },
+    lastConnection: {
+        type: String
     }
 });
 

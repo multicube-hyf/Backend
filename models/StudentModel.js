@@ -22,8 +22,8 @@ const studentSchema = Schema({
     mom_lastName: {
         type: String
     },
-    lastConnection: {
-        type: String
+    progress: {
+        type: Number
     }
 });
 
