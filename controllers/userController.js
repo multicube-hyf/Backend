@@ -93,7 +93,7 @@ const controllers = {
 	},
 
 	//Update user
-	updateUser: async (req, res, next) => {
+	updateUser: async (req, res) => {
 		const id = req.params.id;
 		try {
 			await User.findByIdAndUpdate(
@@ -120,15 +120,19 @@ const controllers = {
 	},
 
 	//Delete user
-	deleteUser: async (req, res, next) => {
+	deleteUser: async (req, res) => {
 		try {
-			await User.findByIdAndRemove(req.params.id, (error, data) => {
-				if (error) {
-					return next(error);
-				} else {
-					res.status(200).send('user deleted successfully');
-				}
-			});
+			let userToDelete = await User.findByIdAndRemove(req.params.id);
+
+			if (!userToDelete) {
+				return res.status(404).json({
+					msg: 'There is no user with that ID',
+				});
+            }
+            
+            res.status(200).json({
+                msg: 'User deleted successfully'
+            })
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({
