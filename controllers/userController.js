@@ -8,8 +8,6 @@ const { generateJWT } = require('../helpers/jwt');
 const controllers = {
 	// Get all users
 	getAllUsers: async (req, res) => {
-		
-		
 		try {
 			let data = await User.find();
 
@@ -36,12 +34,21 @@ const controllers = {
 	getOneUser: async (req, res) => {
 		const id = req.params.id;
 		try {
-			await User.findById(id, (err, data) => {
-				if (err) {
-					return next(err);
-				} else {
-					res.json(data);
-				}
+			const user = await User.findById(id);
+
+			if (!user) {
+				return res.status(404).json({
+					msg: 'There is no user with that ID',
+				});
+			}
+
+			const { name, lastName, lastConnection, progress } = user;
+
+			res.status(200).json({
+				name,
+				lastName,
+				progress,
+				lastConnection
 			});
 		} catch (error) {
 			console.log(error);
