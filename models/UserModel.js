@@ -26,6 +26,9 @@ const userSchema = Schema({
         type: String,
         required: true
     },
+    lastConnection: {
+        type: String
+    },
     created_at: {
         type: Date
     },
