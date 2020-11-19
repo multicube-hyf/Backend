@@ -34,7 +34,7 @@ const controllers = {
 	getOneUser: async (req, res) => {
 		const studentId = req.params.id;
 		try {
-			const student = await Student.findById(studentId).populate('user_id');
+			const student = await Student.findById(studentId).populate('user');
 			
 			if (!student) {
 				return res.status(404).json({
@@ -42,8 +42,8 @@ const controllers = {
 				});
 			}
 
-			const { progress, user_id } = student;
-			const {name, lastName, lastConnection} = user_id;
+			const { progress, user } = student;
+			const {name, lastName, lastConnection} = user;
 
 			res.status(200).json({
 				name,
@@ -128,7 +128,7 @@ const controllers = {
 			if (role === 'student') {
 				let student = new Student({
 					...req.body,
-					user_id: savedUser._id,
+					user: savedUser._id,
 				});
 
 				await student.save();
