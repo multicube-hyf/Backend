@@ -14,8 +14,8 @@ const controllers = {
 			let users = [];
 
 			data.forEach((user) => {
-				const { _id, username, role } = user;
-				const userInfo = { _id, username, role };
+				const { _id, username, role, lastConnection } = user;
+				const userInfo = { _id, username, role, lastConnection };
 				users.push(userInfo);
 			});
 
@@ -32,17 +32,18 @@ const controllers = {
 
 	// Get Single user
 	getOneUser: async (req, res) => {
-		const id = req.params.id;
+		const studentId = req.params.id;
 		try {
-			const user = await User.findById(id);
-
-			if (!user) {
+			const student = await Student.findById(studentId).populate('user_id');
+			
+			if (!student) {
 				return res.status(404).json({
 					msg: 'There is no user with that ID',
 				});
 			}
 
-			const { name, lastName, lastConnection, progress } = user;
+			const { progress, user_id } = student;
+			const {name, lastName, lastConnection} = user_id;
 
 			res.status(200).json({
 				name,
@@ -54,6 +55,47 @@ const controllers = {
 			console.log(error);
 			res.status(500).json({
 				msg: 'There was an error, please contact admin',
+			});
+		}
+	},
+
+	userLogin: async (req, res) => {
+		const { username, password } = req.body;
+
+		try {
+			const user = await User.findOne({ username });
+
+			if (!user) {
+				return res.status(404).json({
+					msg: 'The username does not exist',
+				});
+			}
+
+			const validPassword = bcrypt.compareSync(password, user.password);
+
+			if (!validPassword) {
+				return res.status(400).json({
+					msg: 'Invalid password',
+				});
+			}
+
+
+			//set last connection
+			user.lastConnection = moment().format('MMMM Do YYYY, h:mm:ss a');
+
+			await User.findByIdAndUpdate(user._id, user);
+
+			const token = await generateJWT(user._id, user.name);
+
+			res.json({
+				name: user.name,
+				token,
+			});
+		} catch (error) {
+			console.log(error);
+			res.status(500).json({
+				ok: false,
+				msg: 'Please talk to the administrator',
 			});
 		}
 	},

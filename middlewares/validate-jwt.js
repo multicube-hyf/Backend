@@ -15,9 +15,12 @@ const validateJWT = async (req, res, next) => {
 		const payload = jwt.verify(token, process.env.JWT_SECRET_SEED);
 
 		req.id = payload.userId;
-		req.name = payload.name;
 
-		let user = await User.findById(payload.userId);
+        let user = await User.findById(payload.userId);
+        
+        if (user.role === 'teacher') {
+			 return next()
+		}
 
 		if (user.role !== 'admin') {
 			return res.status(403).json({
