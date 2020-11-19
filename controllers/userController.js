@@ -1,4 +1,5 @@
 const User = require('../models/UserModel');
+const Student = require('../models/StudentModel');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 
@@ -7,13 +8,21 @@ const { generateJWT } = require('../helpers/jwt');
 const controllers = {
 	// Get all users
 	getAllUsers: async (req, res) => {
+		
+		
 		try {
-			await User.find((err, data) => {
-				if (err) {
-					return next(err);
-				} else {
-					res.json(data);
-				}
+			let data = await User.find();
+
+			let users = [];
+
+			data.forEach((user) => {
+				const { _id, username, role } = user;
+				const userInfo = { _id, username, role };
+				users.push(userInfo);
+			});
+
+			res.status(200).json({
+				users,
 			});
 		} catch (error) {
 			console.log(error);
@@ -128,11 +137,11 @@ const controllers = {
 				return res.status(404).json({
 					msg: 'There is no user with that ID',
 				});
-            }
-            
-            res.status(200).json({
-                msg: 'User deleted successfully'
-            })
+			}
+
+			res.status(200).json({
+				msg: 'User deleted successfully',
+			});
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({
