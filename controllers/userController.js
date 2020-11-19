@@ -48,7 +48,7 @@ const controllers = {
 				name,
 				lastName,
 				progress,
-				lastConnection
+				lastConnection,
 			});
 		} catch (error) {
 			console.log(error);
@@ -112,21 +112,12 @@ const controllers = {
 	updateUser: async (req, res) => {
 		const id = req.params.id;
 		try {
-			await User.findByIdAndUpdate(
-				id,
-				{
-					$set: req.body,
-				},
-				(err, data) => {
-					if (err) {
-						return next(err);
-						console.log(err);
-					} else {
-						res.json(data);
-						console.log('user updated successfully ..!');
-					}
-				}
-			);
+			 await User.findByIdAndUpdate(id, req.body);
+
+			res.status(200).json({
+				msg: 'User updated successfully',
+			})
+
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({
