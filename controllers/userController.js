@@ -80,6 +80,7 @@ const controllers = {
 
 			let savedUser = await user.save();
 
+			//token
 			const token = await generateJWT(savedUser._id, user.name);
 
 			if (role === 'student') {
@@ -112,12 +113,11 @@ const controllers = {
 	updateUser: async (req, res) => {
 		const id = req.params.id;
 		try {
-			 await User.findByIdAndUpdate(id, req.body);
+			await User.findByIdAndUpdate(id, req.body);
 
 			res.status(200).json({
 				msg: 'User updated successfully',
-			})
-
+			});
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({
