@@ -1,140 +1,129 @@
 const Classroom = require('../models/ClassroomModel');
 
 const createClassroom = async (req, res) => {
+	try {
+		let classroom = new Classroom(req.body);
 
-     try {
+		const savedClassroom = await classroom.save();
 
-        let classroom =  new Classroom(req.body);
-
-        const savedClassroom = await classroom.save();
-
-        res.status(201).json({
-            classroom: savedClassroom
-        });
-         
-     } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            ok: false,
-            msg: 'Please talk to the administrator'
-        });
-     }
+		res.status(201).json({
+			classroom: savedClassroom,
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			ok: false,
+			msg: 'Please talk to the administrator',
+		});
+	}
 };
 
 const getClassrooms = async (req, res) => {
-    
-    try {
+	try {
+		let classrooms = await Classroom.find();
 
-        let classrooms = await  Classroom.find();
-
-        res.status(200).json({
-            classrooms
-        })
-
-     } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            ok: false,
-            msg: 'Please talk to the administrator'
-        });
-     }
+		res.status(200).json({
+			classrooms,
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			ok: false,
+			msg: 'Please talk to the administrator',
+		});
+	}
 };
 
 const getClassroom = async (req, res) => {
-    const {id: classId} = req.params
+	const { id: classId } = req.params;
 
-    try {
+	try {
+		let classroom = await Classroom.findById(classId);
 
-    let classroom  = await Classroom.findById(classId);
+		if (!classroom) {
+			return res.status(400).json({
+				msg: 'There is no classroom with that ID',
+			});
+		}
 
-    if(!classroom){
-         return res.status(400).json({
-            msg: 'There is no classroom with that ID'
-        })
-    };
+		const {
+			students_ids,
+			teachers_ids,
+			messages,
+			title,
+			description,
+		} = classroom;
 
-    res.status(200).json({
-        classroom
-    });
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            ok: false,
-            msg: 'Please talk to the administrator'
-        });
-    }
+		res.status(200).json({
+			classroom: { students_ids, teachers_ids, messages, title, description },
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			ok: false,
+			msg: 'Please talk to the administrator',
+		});
+	}
 };
 
 const deleteClass = async (req, res) => {
-    const {id: classId} = req.params
+	const { id: classId } = req.params;
 
-    try {
+	try {
+		let classroomToDeleted = await Classroom.findByIdAndDelete(classId);
 
-       let classroomToDeleted = await Classroom.findByIdAndDelete(classId);
+		if (!classroomToDeleted) {
+			return res.status(400).json({
+				msg: 'There is no classroom with that ID',
+			});
+		}
 
-       if(!classroomToDeleted){
-          return res.status(400).json({
-               msg: "There is no classroom with that ID"
-           })
-       }
-
-       res.status(200).json({
-           msg: "Classroom deleted successfully"
-       })
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            ok: false,
-            msg: 'Please talk to the administrator'
-        });
-    }
-     
+		res.status(200).json({
+			msg: 'Classroom deleted successfully',
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			ok: false,
+			msg: 'Please talk to the administrator',
+		});
+	}
 };
 
-const updateClassroom  = async (req, res) => {
-    const {id: classId} = req.params;
+const updateClassroom = async (req, res) => {
+	const { id: classId } = req.params;
 
-     try {
-        
-        const classroom = await Classroom.findById(classId);
+	try {
+		const classroom = await Classroom.findById(classId);
 
-        if(!classroom){
-            return res.status(404).json({
-                msg: 'There is no classroom with that ID'
-            })
-        };
+		if (!classroom) {
+			return res.status(404).json({
+				msg: 'There is no classroom with that ID',
+			});
+		}
 
-        const newClass = {
-            ...req.body
-        };
+		const newClass = {
+			...req.body,
+		};
 
-        const classUpdated = await Classroom.findByIdAndUpdate(classId, newClass, {new: true} );
+		await Classroom.findByIdAndUpdate(classId, newClass, { new: true });
 
-        res.status(200).json({
-            classroom: classUpdated
-        });
-
-         
-     } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            ok: false,
-            msg: 'Please talk to the administrator'
-        });
-     }
-}
-
-
-
-
-
+		res.status(200).json({
+			msg: 'Classroom updated successfully',
+		});
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({
+			ok: false,
+			msg: 'Please talk to the administrator',
+		});
+	}
+};
 
 module.exports = {
-    createClassroom,
-    getClassrooms,
-    getClassroom,
-    deleteClass,
-    updateClassroom
+	createClassroom,
+	getClassrooms,
+	getClassroom,
+	deleteClass,
+	updateClassroom,
 };
