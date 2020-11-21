@@ -25,4 +25,4 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/messages', require('./routes/messages'));
 
 //listen
-app.listen(process.env.PORT, () => console.log(`Listening on localhost:${process.env.PORT}`))
+app.listen(process.env.PORT, () => console.log(`Listening on port:${process.env.PORT}`))
