@@ -14,6 +14,9 @@ dbConnection()
 //CORS
 app.use(cors());
 
+//public directory
+app.use(express.static('public'));
+
 //body parser
 app.use(express.json());
 
