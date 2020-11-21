@@ -25,6 +25,10 @@ const classroomSchema = Schema({
     },
     updated_at: {
         type: Date
+    },
+    adminId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, { timestamps: true });
 
