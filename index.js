@@ -18,10 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 //Routes
-app.get('/', (req, res) => {
-    res.send('The API Server is working...');
-});
-
+app.use('/api/classrooms', require('./routes/classroom'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/messages', require('./routes/messages'));
 

@@ -6,7 +6,6 @@ const validateJWT = async (req, res, next) => {
 
 	if (!token) {
 		return res.status(401).json({
-			ok: false,
 			msg: 'Token missing',
 		});
 	}
@@ -30,7 +29,6 @@ const validateJWT = async (req, res, next) => {
 		}
 	} catch (error) {
 		return res.status(401).json({
-			ok: false,
 			msg: 'Invalid Token',
 		});
 	}
@@ -38,5 +36,5 @@ const validateJWT = async (req, res, next) => {
 };
 
 module.exports = {
-	validateJWT,
+	validateJWT
 };

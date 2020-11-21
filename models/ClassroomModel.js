@@ -25,7 +25,17 @@ const classroomSchema = Schema({
     },
     updated_at: {
         type: Date
+    },
+    adminId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
-});
+}, { timestamps: true });
+
+classroomSchema.method('toJSON', function () {
+    const {__v, _id, ...object} = this.toObject();
+    object.id = _id;
+    return object;
+})
 
 module.exports = model('Classroom', classroomSchema);
