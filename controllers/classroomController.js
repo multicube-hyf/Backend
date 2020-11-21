@@ -3,11 +3,13 @@ const Classroom = require('../models/ClassroomModel');
 const createClassroom = async (req, res) => {
 	try {
 		let classroom = new Classroom(req.body);
+		classroom.adminId = req.userId;
 
 		const savedClassroom = await classroom.save();
 
 		res.status(201).json({
-			classroom: savedClassroom,
+			msg: 'classroom created successfully',
+			id: savedClassroom._id,
 		});
 	} catch (error) {
 		console.log(error);
@@ -20,7 +22,19 @@ const createClassroom = async (req, res) => {
 
 const getClassrooms = async (req, res) => {
 	try {
-		let classrooms = await Classroom.find();
+		let data = await Classroom.find();
+
+		let classrooms = [];
+
+		data.map((classroom) => {
+			const { id, title, description } = classroom;
+			const classroomInfo = {
+				id,
+				title,
+				description,
+			};
+			classrooms.push(classroomInfo);
+		});
 
 		res.status(200).json({
 			classrooms,
@@ -55,7 +69,13 @@ const getClassroom = async (req, res) => {
 		} = classroom;
 
 		res.status(200).json({
-			classroom: { students_ids, teachers_ids, messages, title, description },
+			classroom: {
+				students_ids,
+				teachers_ids,
+				messages,
+				title,
+				description,
+			},
 		});
 	} catch (error) {
 		console.log(error);
