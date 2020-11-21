@@ -6,7 +6,6 @@ require('dotenv').config();
 
 //app config
 const app = express();
-const port = process.env.PORT || 5000;
 
 //database
 dbConnection()
@@ -26,4 +25,4 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/messages', require('./routes/messages'));
 
 //listen
-app.listen(port, () => console.log(`Listening on localhost:${port}`))
+app.listen(process.env.PORT, () => console.log(`Listening on localhost:${process.env.PORT}`))
