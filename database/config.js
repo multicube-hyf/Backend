@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const dbConnection =  async () => {
 
@@ -8,7 +8,7 @@ const dbConnection =  async () => {
             useUnifiedTopology: true,
             useCreateIndex: true
         });
-        
+
         console.log('DB online')
 
      } catch (error) {
@@ -17,4 +17,6 @@ const dbConnection =  async () => {
      }
 };
 
-export { dbConnection };
+module.exports = {
+    dbConnection
+};

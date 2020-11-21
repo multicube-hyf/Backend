@@ -31,7 +31,16 @@ const userSchema = Schema({
     },
     updated_at: {
         type: Date
+    },
+    lastConnection: {
+        type: String
     }
-});
+}, { timestamps: true });
+
+userSchema.method('toJSON', function () {
+    const {__v, _id, ...object} = this.toObject();
+    object.id = _id;
+    return object;
+})
 
 module.exports = model('User', userSchema);
