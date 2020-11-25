@@ -521,7 +521,7 @@ A json object with  and an array of `students` for that specific classroom.
 
 ##### **Response `200`**
 
-A json object with the details of the  classroom with `id`, `title`, `description`, `teachers_usernames`, `students_usernames`, `msgs`, `created_at` and `updated_at`.
+A json object with the details of the  classroom with  `title`, `description`, `teachers_ids`, `students_ids` and`messages`.
 
 ```
 {
