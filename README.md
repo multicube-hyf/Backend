@@ -1,3 +1,10 @@
+# **MultiCube Backend**
+MutiCube is a web app to teach numbers, addition and multiplication to children between 7 and 10 years old.
+
+It also allows schools to manage classrooms, students and teachers for distance education in times of COVID-19.
+
+- 	[Frontend](https://github.com/multicube-hyf/frontend)
+
 # **Backend architecture**
 
 ## **Database design**
@@ -9,8 +16,8 @@
 
 MultiCube runs on virtually any system where Node.js is supported. This means it runs on Linux, macOS, Windows as well as container solutions such as Docker and Heroku.
 #### **Versions**
-- MongoDB 4.4 or later
-- NodeJS 12.8.3 or later
+- MongoDB 4.4
+- NodeJS 12.8
 
 ### **1 | Create and/or configure environement variables**
 
@@ -18,8 +25,8 @@ MultiCube runs on virtually any system where Node.js is supported. This means it
 - Replace all variables noted with $ below, and save it to the .env file
 ```
 PORT=$port_number
-DATABASE_URL=mongodb+srv://$<user>:$<password>@cluster0.kskcg.mongodb.net/$db_name
-JWT_SECRET=$long_random_characters
+DB_CNN=mongodb://localhost:27017/$db_name
+JWT_SECRET_SEED=$long_random_characters
 ```
 
 ### **2 | Installation of packages with npm**
@@ -28,7 +35,7 @@ JWT_SECRET=$long_random_characters
 
 ### **3 | Run the server**
 - To run in development: `npm run dev`
-- to run in production:  `npm start`
+- To run in production:  `npm start`
 
 ### **API endpoints**
 ---
@@ -118,7 +125,7 @@ A json object for the logged in account with `name` and `token`
 
 ```
 {
-  "name": "User name"
+  "name": "User name",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1CJlbWFpbCI6ImphY2tAZXc2VybmFtZSI6ImphY2siLhhbXBsZS5jb20iLCJpYXQiOjE1OTg2MTc2MTksImV4cCI6MTYwMTIwOTYxOX0.s85ti_rzBVHJ6Gt1MY7seYfdcjB6sR939p2CexA40gI"
 }
 ```
